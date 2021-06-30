@@ -41,6 +41,7 @@ app.use('/login', loginRouter)
 
 app.use('/users', usersRouter)
 
+//endpoint para solicitudes
 app.use('/requests', requestsRouter)
 
 app.use('/reports', reportsRouter)
