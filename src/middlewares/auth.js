@@ -18,21 +18,21 @@ auth.verifyToken = ( request, response, next ) => {
 
 		return response.status(401).json({
 
-				error: 'Missing or invalid token'
-			})
+			error: 'Missing or invalid token'
+		})
 	}
-
 
 	try {
 
 		const decodedToken = jwt.verify(token, process.env.SECRET)
 
 		if(!token || !decodedToken) return response.status(401).json({
-				error: 'Unauthorized'
-			})
+			error: 'Unauthorized'
+		})
 
 		else {
 			request.userId = decodedToken.id
+			request.userRoles = decodedToken.roles.map(roles => roles.name)
 			next()
 		}
 
@@ -42,8 +42,8 @@ auth.verifyToken = ( request, response, next ) => {
 
 		response.status(401).json({
 
-						error: 'Unauthorized'
-					})
+			error: 'Unauthorized'
+		})
 
 		next(error)
 	}
@@ -61,14 +61,15 @@ auth.verifyUser = async (request, response, next) => {
 
 	const userRoles = roles.map(role => role.name)
 
-	if(userRoles.includes('admin')){
-		next()
-	}
+	if(!userRoles.includes('admin')){
 
-	return response.status(403).json({
+		return response.status(403).json({
 			error: 'Admin privilegies required'
 		})
+	}
 
+	next()
+	
 }
 
 module.exports = auth

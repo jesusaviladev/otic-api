@@ -24,6 +24,6 @@ const connectToDatabase = async () => {
 connectToDatabase()
 
 process.on('uncaughtException', (error) => {
-		console.log(error)
-		mongoose.disconnect()
-	})
+	console.log(error)
+	mongoose.disconnect()
+})

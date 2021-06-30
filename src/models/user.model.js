@@ -11,11 +11,22 @@ const userSchema = new Schema({
 		required: true
 	},
 	roles: [{ //relacionamos roles con el modelo de Roles
-		ref: "role",
+		ref: 'role',
 		type: Schema.Types.ObjectId
 	}],
+	name: String,
+	lastName: String,
+	tel: [ String ],
+	email: {
+		type: String,
+		unique: true
+	},
 	requests: [{
-		ref: "request",
+		ref: 'request',
+		type: Schema.Types.ObjectId
+	}],
+	reports: [{
+		ref: 'report',
 		type: Schema.Types.ObjectId
 	}]
 })
@@ -24,8 +35,8 @@ userSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id
 		delete returnedObject._id
-        delete returnedObject.__v
-        delete returnedObject.password
+		delete returnedObject.__v
+		delete returnedObject.password
 	}
 })
 

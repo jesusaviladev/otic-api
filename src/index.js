@@ -8,6 +8,7 @@ const registerRouter = require('./routes/register.routes.js')
 const loginRouter = require('./routes/login.routes.js')
 const usersRouter = require('./routes/users.routes.js')
 const requestsRouter = require('./routes/requests.routes.js')
+const reportsRouter = require('./routes/reports.routes.js')
 
 const app = express()
 
@@ -41,6 +42,8 @@ app.use('/login', loginRouter)
 app.use('/users', usersRouter)
 
 app.use('/requests', requestsRouter)
+
+app.use('/reports', reportsRouter)
 
 //manejadores de errores
 app.use((request, response, next) => {

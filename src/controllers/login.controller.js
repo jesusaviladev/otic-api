@@ -17,8 +17,8 @@ loginController.login = async (request, response, next)=> {
 	const userDB = await User.findOne({username: username}).populate('roles')
 
 	const isPasswordCorrect = userDB === null 
-	? false 
-	: await bcrypt.compare(password, userDB.password)
+		? false 
+		: await bcrypt.compare(password, userDB.password)
 
 	if(!(userDB && isPasswordCorrect)){
 		return response.status(401).json({

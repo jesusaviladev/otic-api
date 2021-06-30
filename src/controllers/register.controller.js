@@ -5,15 +5,17 @@ const bcrypt = require('bcrypt')
 const registerController = {}
 
 registerController.createUser = async (request, response, next)=> {
+	
 	//Registrar nuevo usuario
-	const { username, password, roles } = request.body
-
-	//Validamos si los datos son correctos
-	if(!username || !password){
-		return response.status(400).json({
-			error: 'Missing data'
-		})
-	}
+	const { 
+		username, 
+		password, 
+		roles,
+		name,
+		lastName,
+		tel,
+		email
+	} = request.body
 
 	const allUsers = await User.find({ username: username })
 	//Comprobamos si el usuario ya existe
@@ -29,8 +31,13 @@ registerController.createUser = async (request, response, next)=> {
 	//agregamos nuevo usuario y respondemos con el usuario agregado
 	const newUser = new User({
 		username: username,
-		password: hashedPassword
+		password: hashedPassword,
+		name: name,
+		lastName: lastName,
+		tel: tel,
+		email: email
 	})
+	
 	//si nos pasan roles buscamos roles en la BD
 	if(roles) {
 		const foundRoles = await Role.find({ name: {$in: roles}})

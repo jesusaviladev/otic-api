@@ -1,10 +1,10 @@
-
+const User = require('../models/user.model.js')
 const usersController = {}
 
 usersController.getAllUsers = (request, response) => {
-	response.json({
-		res: 'get all users'
-	})
+	User.find({}).populate('roles')
+		.then(users => response.json(users))
+		.catch(error => next(error))
 }
 
 usersController.createUser = (request, response) => {
