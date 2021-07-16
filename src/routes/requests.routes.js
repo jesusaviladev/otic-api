@@ -6,6 +6,8 @@ const { verifyToken, verifyUser } = require('../middlewares/auth.js')
 
 requestsRouter.get('/', verifyToken, requestsController.getAllRequests)
 
+requestsRouter.get('/:id', verifyToken, requestsController.getRequestById)
+
 requestsRouter.get('/search', requestsController.searchRequests)
 
 requestsRouter.post('/', verifyToken, validateRequest, requestsController.createNewRequest)

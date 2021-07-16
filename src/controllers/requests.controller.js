@@ -5,13 +5,33 @@ const requestsController = {}
 
 requestsController.getAllRequests = (request, response, next) => {
 	
-	Request.find({})
+	Request.find({}).populate('assignedUser', 'name lastName username')
 		.then(requests => {
 			response.json(requests)
 		})
 		.catch(error => {
 			next(error)
 		})
+}
+
+requestsController.getRequestById = (request, response, next) => {
+
+	const { id } = request.params
+
+	if(!id || id.length < 12){
+		return response.status(400).json({
+			error: 'Invalid id'
+		})
+	}
+
+	Request.findById(id)
+		.then(requests => {
+			response.json(requests)
+		})
+		.catch(error => {
+			next(error)
+		})
+
 }
 
 requestsController.searchRequests = async (request, response, next) => {
